@@ -10,7 +10,10 @@ public:
     //* Parameters      :   pointer from type T*.
     //* Return value    :   nothing (constructor).
     //**************************************************************************************************
-    MySharedPtr(T* ptr) : count_(1),ptr_(ptr) {};
+    MySharedPtr(T* ptr) : ptr_(ptr) {
+        count_ = new int;
+        *count_ = 1;
+    };
     
     //**************************************************************************************************
     //* function name   :   ~MySharedPtr
@@ -19,8 +22,8 @@ public:
     //* Return value    :   nothing (destructor).
     //**************************************************************************************************
     ~MySharedPtr(){
-        count_--;
-        if (!count_)
+        (*count_)--;
+        if (!(*count_))
             ptr_->~T(); // look for potential memory leak
     };
     
@@ -57,17 +60,20 @@ public:
     //**************************************************************************************************
     MySharedPtr& operator=(MySharedPtr& new_ptr){
         if (this != &new_ptr){
-            count_--;
-            if (!count_)
+            (*count_)--;
+            if ((*count_) == 0){
                 ptr_->~T(); // look for potential memory leak
-            this = &new_ptr;
-            count_++;
+                //count_->~Int();
+            }
+            ptr_ = new_ptr.get();
+            count_ = new_ptr.count_;
+            (*count_)++;
         }
         return *this;
     };
     
 private:
-    int count_;
+    int* count_;
     T* ptr_;
 };
 
