@@ -16,6 +16,18 @@ public:
     };
     
     //**************************************************************************************************
+    //* function name   :   MySharedPtr
+    //* Description     :   copy constructor.
+    //* Parameters      :   pointer from type T*.
+    //* Return value    :   nothing (constructor).
+    //**************************************************************************************************
+    MySharedPtr(MySharedPtr& new_ptr){
+        ptr_ = new_ptr.ptr_;
+        count_ = new_ptr.count_;
+        (*count_)++;
+    };
+    
+    //**************************************************************************************************
     //* function name   :   ~MySharedPtr
     //* Description     :   destructor.
     //* Parameters      :   none.
@@ -60,12 +72,9 @@ public:
     //**************************************************************************************************
     MySharedPtr& operator=(MySharedPtr& new_ptr){
         if (this != &new_ptr){
-            (*count_)--;
-            if ((*count_) == 0){
+            if (!(--(*count_)))
                 ptr_->~T(); // look for potential memory leak
-                //count_->~Int();
-            }
-            ptr_ = new_ptr.get();
+            ptr_ = new_ptr.ptr_;
             count_ = new_ptr.count_;
             (*count_)++;
         }
