@@ -2,7 +2,7 @@
 #define _CONVERSATION_H_
 
 #include "ObjectInterface.h"
-
+#include <string>
 #include <chrono>
 
 enum ConversationStatus { READ, UNREAD };
@@ -21,6 +21,6 @@ private:
 
 
 // ------------------------------- Conversation ------------------------------- //
-
+class Conversation {};
 
 #endif
