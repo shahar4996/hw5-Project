@@ -21,6 +21,17 @@ private:
 
 
 // ------------------------------- Conversation ------------------------------- //
+class Conversation : public ObjectInterface {
+public:
+    Message(const string& by, const string& content) : by_(by), content_(content) {}
+    void Print() const { cout << by_ << " : " << content_ << endl; }
+private:
+    string by_;
+    string content_;
+    
+    
+    
+};
 
 
 #endif
