@@ -1,9 +1,75 @@
 #ifndef _MY_SHARED_PTR_H_
 #define _MY_SHARED_PTR_H_
 
-
-
-
+template <class T> class MySharedPtr {
+public:
+    
+    //**************************************************************************************************
+    //* function name   :   MySharedPtr
+    //* Description     :   constructor.
+    //* Parameters      :   pointer from type T*.
+    //* Return value    :   nothing (constructor).
+    //**************************************************************************************************
+    MySharedPtr(T* ptr) : count_(1),ptr_(ptr) {};
+    
+    //**************************************************************************************************
+    //* function name   :   ~MySharedPtr
+    //* Description     :   destructor.
+    //* Parameters      :   none.
+    //* Return value    :   nothing (destructor).
+    //**************************************************************************************************
+    ~MySharedPtr(){
+        count_--;
+        if (!count_)
+            ptr_->~T(); // look for potential memory leak
+    };
+    
+    //**************************************************************************************************
+    //* function name   :   get
+    //* Description     :   returns the saved pointer.
+    //* Parameters      :   none.
+    //* Return value    :   returns the saved pointer.
+    //**************************************************************************************************
+    T* get() const { return ptr_; };
+    
+    //**************************************************************************************************
+    //* function name   :   * operator
+    //* Description     :   dereferance for the pointer.
+    //* Parameters      :   none.
+    //* Return value    :   returns the dereferanced object.
+    //**************************************************************************************************
+    T& operator*() const { return *ptr_; };
+    
+    //**************************************************************************************************
+    //* function name   :   -> operator
+    //* Description     :   returns the saved pointer.
+    //* Parameters      :   none.
+    //* Return value    :   returns the saved pointer.
+    //**************************************************************************************************
+    T* operator->() const { return ptr_; };
+    
+    //**************************************************************************************************
+    //* function name   :   = operator
+    //* Description     :   assigment overload. When the old object is not being held by any pointer
+    //*                     - then it is being released.
+    //* Parameters      :   none.
+    //* Return value    :   returns the new assigment reference.
+    //**************************************************************************************************
+    MySharedPtr& operator=(MySharedPtr& new_ptr){
+        if (this != &new_ptr){
+            count_--;
+            if (!count_)
+                ptr_->~T(); // look for potential memory leak
+            this = &new_ptr;
+            count_++;
+        }
+        return *this;
+    };
+    
+private:
+    int count_;
+    T* ptr_;
+};
 
 
 #endif // _MY_SHARED_PTR_H_
