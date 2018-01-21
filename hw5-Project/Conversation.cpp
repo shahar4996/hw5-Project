@@ -36,7 +36,13 @@ void Conversation::VrtDo(string cmdLine, string activeUsrName)
 
 void Conversation::Preview(string activeUsrName)
 {
-    User mem = members_.begin()
+    set<User> :: iterator temp = members_.begin();
+    for (int i = 0; i< (int)members_.size(); i++) {
+        if( members_.)
+    }
+    while temp
+        <#statements#>
+    }
     members_.begin()
 	// Mark that user read the conversation and display the conversation on screen
 }
