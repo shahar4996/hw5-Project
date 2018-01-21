@@ -4,6 +4,8 @@
 #include "ObjectInterface.h"
 #include <string>
 #include <chrono>
+#include "User.h"
+#include <map>
 
 enum ConversationStatus { READ, UNREAD };
 
@@ -18,6 +20,7 @@ private:
 	string by_;
 	string content_;
 };
+
 
 
 // ------------------------------- Conversation ------------------------------- //
