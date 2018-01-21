@@ -1,5 +1,6 @@
 #include "MessageBox.h"
-
+#include <iostream>
+using namespace std;
 
 
 
@@ -35,22 +36,23 @@ void MessageBox::VrtDo(string cmdLine, string activeUsrName)
 		// add code here
 	}
 	else // INVALID_INPUT
-		cout << INVALID_INPUT;
+        cout << INVALID_INPUT;
 }
 
 
-void MessageBox::VrtPreview(string activeUsrName)
+void MessageBox::Preview(string activeUsrName)
 {
 	int count = 1;
-	if (/* There are no conversations in MessageBox */)
+	if (conversations_.empty()) // There are no conversations in MessageBox
 		cout << "No conversations" << endl;
 	else
 		cout << "Conversations:" << endl;
-	// ?????????????
-	for (/* iterate over conversations with iterator called itr */)
+   
+    list<Conversation>::iterator itr = conversations_.begin();
+    for (; itr != conversations_.end(); itr++) // iterate over conversations with iterator called itr
 	{
 		cout << count << ") ";
-		if (/* the user did not read the current message */)
+		if () //* the user did not read the current message
 			cout << "(UNREAD) ";
 		cout << "Participants: ";
 		(*itr)->DisplayParticipants();
