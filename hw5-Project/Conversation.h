@@ -15,11 +15,11 @@ typedef chrono::system_clock::time_point SysTime;
 // ------------------------------- Message ------------------------------- //
 class Message {
 public:
-	Message(const string& by, const string& content) : by_(by), content_(content) {}
-	void Print() const { cout << by_ << " : " << content_ << endl; }
+    Message(const string& by, const string& content) : by_(by), content_(content) {}
+    void Print() const { cout << by_ << " : " << content_ << endl; }
 private:
-	string by_;
-	string content_;
+    string by_;
+    string content_;
 };
 
 
@@ -59,6 +59,5 @@ private:
     map<ConversationStatus, User> readList_;
     SysTime updateTime_;
 };
-
 
 #endif
