@@ -38,7 +38,7 @@ void Conversation::Preview(string activeUsrName)
 {
     set<User> :: iterator temp = members_.begin();
     for (int i = 0; i< (int)members_.size(); i++) {
-        if( members_.)
+        if( (members_.begin()+i))
     }
     while temp
         <#statements#>
