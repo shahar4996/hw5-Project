@@ -34,8 +34,10 @@ void Conversation::VrtDo(string cmdLine, string activeUsrName)
 }
 
 
-void Conversation::VrtPreview(string activeUsrName)
+void Conversation::Preview(string activeUsrName)
 {
+    User mem = members_.begin()
+    members_.begin()
 	// Mark that user read the conversation and display the conversation on screen
 }
 
