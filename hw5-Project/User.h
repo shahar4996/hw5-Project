@@ -1,6 +1,7 @@
 #ifndef _USER_H_
 #define _USER_H_
 
+#include "MessageBox.h"
 #include "ObjectInterface.h"
 
 // ------------------------------- User ------------------------------- //
@@ -33,6 +34,13 @@ public:
     //**************************************************************************************************
     void VrtDo(string cmd, string activeUsrName);
     
+    //**************************************************************************************************
+    //* function name   :   getUserName
+    //* Description     :   the function returns the user name.
+    //* Parameters      :   none.
+    //* Return value    :   the user name of the current user.
+    //**************************************************************************************************
+    string getUserName() const;
     // ------------------------------- Properties ------------------------------------ //
 private:
     string name_;
