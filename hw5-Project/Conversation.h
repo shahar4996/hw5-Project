@@ -7,6 +7,7 @@
 #include <chrono>
 #include "User.h"
 #include <map>
+#include <string>
 
 enum ConversationStatus { READ, UNREAD };
 
@@ -26,6 +27,7 @@ private:
 
 // ------------------------------- Conversation ------------------------------- //
 class Conversation : public ObjectInterface {
+    
 // ------------------------------- Methods ------------------------------------ //
 public:
     //**************************************************************************************************
@@ -35,7 +37,8 @@ public:
     //*                     and if they read the conv. and the update time .
     //* Return value    :   none.
     //**************************************************************************************************
-    Conversation(set<User> members, list<Message> messages, map<ConversationStatus, User> readList, SysTime updateTime) : members_(members), messages_(messages), readList_(readList), updateTime_(updateTime) {}
+    Conversation(set<User> members);
+    
     //**************************************************************************************************
     //* function name   :   Preview
     //* Description     :   if the user is part of the conversation we will print it on the screen.
@@ -43,6 +46,7 @@ public:
     //* Return value    :   none.
     //**************************************************************************************************
     void Preview(string activeUsrName);
+    
     //**************************************************************************************************
     //* function name   :   VrtDo
     //* Description     :   the function get the command and execute it. there are two commands: Write and Back.
@@ -52,11 +56,51 @@ public:
     //**************************************************************************************************
     void VrtDo(string cmd, string activeUsrName);
     
+    //**************************************************************************************************
+    //* function name   :   Help
+    //* Description     :   the function print all the possible commands.
+    //* Parameters      :   none.
+    //* Return value    :   none.
+    //**************************************************************************************************
+    void Help() const;
+    
+    //**************************************************************************************************
+    //* function name   :   DisplayParticipants
+    //* Description     :   The function print all the participant in the Conversation.
+    //* Parameters      :   none.
+    //* Return value    :   none.
+    //**************************************************************************************************
+    void DisplayParticipants();
+    
+    //**************************************************************************************************
+    //* function name   :   DisplayMessages
+    //* Description     :   The function print all the messages in the Conversation.
+    //* Parameters      :   none.
+    //* Return value    :   none.
+    //**************************************************************************************************
+    void DisplayMessages();
+    
+    //**************************************************************************************************
+    //* function name   :   findUserByName
+    //* Description     :   the function search for user in the conversation by name.
+    //* Parameters      :   name- the name of the wanted user.
+    //* Return value    :   the function return the user if found and NULL else.
+    //**************************************************************************************************
+    bool UserExist(string name);
+    
+    //**************************************************************************************************
+    //* function name   :   getStatusByName
+    //* Description     :   the function check the conv. status of the
+    //* Parameters      :   name- the name of the wanted user.
+    //* Return value    :   the function return the user if found and NULL else.
+    //**************************************************************************************************
+    ConversationStatus getStatusByName(string name);
+    
  // ------------------------------- Properties ------------------------------------ //
 private:
     set<User> members_;
     list<Message> messages_;
-    map<ConversationStatus, User> readList_;
+    map<string, ConversationStatus> readList_;
     SysTime updateTime_;
 };
 

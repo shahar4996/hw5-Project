@@ -1,6 +1,7 @@
 #ifndef _USER_H_
 #define _USER_H_
 
+#include "MessageBox.h"
 #include "ObjectInterface.h"
 
 // ------------------------------- User ------------------------------- //
