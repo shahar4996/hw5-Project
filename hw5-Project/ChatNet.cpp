@@ -39,13 +39,21 @@ void ChatNet::Do(string cmd)
         // When using stack (from STL) this could like something like the following line:
         // activeObjectStack_.top().Do(cmd, activeUsrName_);
     }
-    catch (CheckAllUsers ex)
+    catch (UserExeption e)
     {
-            //activeObjectStack_.top().add(checkUsers());
+        if (e.getType() == "Messages") {
+            ActiveObjStack_.push(*(users_[currentUser_]->getMessageBox()));
+            ActiveObjStack_.top().Preview(currentUser_);
+        }
+        else if (e.getType() == "Logout") {
+            ActiveObjStack_.pop();
+            currentUser_ = NO_ACTIVE_USER;
+            ActiveObjStack_.top().Preview(currentUser_);
+        }
     }
-    catch (/* ??? */)
+    catch (...)
     {
-
+        
     }
     // more catch phrases
 }

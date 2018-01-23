@@ -59,12 +59,19 @@ vector<string> StringSplit(const string& str, const char* delims, int maxNumSepa
 class CheckAllUsers {
 public:
     CheckAllUsers(string names) : names_(names) {};
-    string getNames() { return names_};
+    string getNames() const { return names_;};
     
 private:
     string names_;
 };
 
-
+class UserExeption {
+public:
+    UserExeption(string exp) : exp_(exp) {};
+    string getType() const { return exp_;};
+    
+private:
+    string exp_;
+};
 
 #endif

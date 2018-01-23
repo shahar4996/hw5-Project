@@ -14,11 +14,11 @@ void User::VrtDo(string cmdLine, string activeUsrName)
     vector<string> cmdLineTokens = StringSplit(cmdLine, BLANK_SPACES);
     if (cmdLineTokens[0] == "Messages" && cmdLineTokens.size() == 1) // Messages
     {
-        throw; // need to return exeption so we will get into messagebox;
+        throw new UserExeption("Messages"); // need to return exeption so we will get into messagebox;
     }
     else if (cmdLineTokens[0] == "Logout" && cmdLineTokens.size() == 1) // Logout
     {
-        throw;  // need to return exeption so we will get back to login;
+        throw new UserExeption("Logout");  // need to return exeption so we will get back to login;
     }
     else // INVALID_INPUT
         cout << INVALID_INPUT;
@@ -33,7 +33,9 @@ void User::Preview(string activeUsrName) {
         cout << USER_PREVIEW_PART2_NEW_MESSAGES;
 }
 
-
+MessageBox* User::getMessageBox() {
+    return &messageBox_;
+}
 
 void User::Help() const
 {
@@ -55,7 +57,7 @@ void Admin::VrtDo(string cmdLine, string activeUsrName)
     vector<string> cmdLineTokens = StringSplit(cmdLine, BLANK_SPACES);
     if (cmdLineTokens[0] == "New" && cmdLineTokens.size() == 3) // New
     {
-        // add code here
+        throw new UserExeption("New");
     }
     else if (cmdLineTokens[0] == "Delete" && cmdLineTokens.size() == 2) // Delete
     {
@@ -67,7 +69,7 @@ void Admin::VrtDo(string cmdLine, string activeUsrName)
     }
     else // User command
     {
-        // add code here
+        this->User::VrtDo(cmdLine, activeUsrName);
     }
 }
 

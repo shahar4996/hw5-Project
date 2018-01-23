@@ -122,6 +122,11 @@ void Conversation::DisplayMessages() {
     }
 }
 
+void Conversation::removeUser(string name) {
+    members_.erase(name);
+    readList_.erase(name);
+}
+
 
 void Conversation::Help() const
 {
