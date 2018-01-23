@@ -41,7 +41,7 @@ void Conversation::VrtDo(string cmdLine, string activeUsrName)
 	if (cmdLineTokens[0] == "Write" && cmdLineTokens.size() == 2) // Write
 	{
         if (UserExist(activeUsrName)) {
-            Message newMes = Message(activeUsrName, cmdLineTokens[2]);
+            Message newMes = Message(activeUsrName, cmdLineTokens[1]);
             messages_.push_back(newMes);
             updateTime_ = chrono::system_clock::now();
             set<string> :: iterator temp = members_.begin();
@@ -106,6 +106,7 @@ void Conversation::DisplayParticipants() {
         cout << PARTICIPANT_READ_STATUS;
         itr++;
     }
+    cout << endl;
 }
 
 //**************************************************************************************************
