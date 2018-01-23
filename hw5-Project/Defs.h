@@ -55,6 +55,16 @@ class BackSignal {
 vector<string> StringSplit(const string& str, const char* delims, int maxNumSeparations = -1);
 
 
+// ------------------------------- Exeptions ------------------------------- //
+class CheckAllUsers {
+public:
+    CheckAllUsers(string names) : names_(names) {};
+    string getNames() { return names_};
+    
+private:
+    string names_;
+};
+
 
 
 #endif
