@@ -37,7 +37,7 @@ public:
     //*                     and if they read the conv. and the update time .
     //* Return value    :   none.
     //**************************************************************************************************
-    Conversation(set<User> members);
+    Conversation(vector<string> members);
     
     //**************************************************************************************************
     //* function name   :   Preview
@@ -94,11 +94,12 @@ public:
     //* Parameters      :   name- the name of the wanted user.
     //* Return value    :   the function return the user if found and NULL else.
     //**************************************************************************************************
-    ConversationStatus getStatusByName(string name);
+    bool IsRead(string name);
+    
     
  // ------------------------------- Properties ------------------------------------ //
 private:
-    set<User> members_;
+    set<string> members_;
     list<Message> messages_;
     map<string, ConversationStatus> readList_;
     SysTime updateTime_;

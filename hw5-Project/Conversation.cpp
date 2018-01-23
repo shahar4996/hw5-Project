@@ -5,44 +5,33 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Interface
-Conversation::Conversation(set<User> members) {
-    members_ = members;
+Conversation::Conversation(vector<string> members) {
+    for (int i = 0; i < (int)members.size(); i++) {
+        members_.insert(members.at(i));
+    }
     messages_ = *new list<Message>;
     updateTime_ = (SysTime)chrono::system_clock::now();
     readList_ = *new map<string,ConversationStatus>;
-    set<User> :: iterator temp = members.begin();
+    set<string> :: iterator temp = members_.begin();
     for (int i = 0; i<(int)members.size(); i++) {
-        readList_[temp->getUserName()] = READ;
+        readList_[*temp] = READ;
         temp++;
     }
 }
 
 bool Conversation::UserExist(string name) {
-    set<User> :: iterator temp = members_.begin();
+    set<string> :: iterator temp = members_.begin();
     for (int i = 0; i<(int)members_.size(); i++) {
-        if(temp->getUserName() == name)
+        if(*temp == name)
             return true;
         temp++;
     }
     return false;
 }
 
-ConversationStatus Conversation::getStatusByName(string name) {
-    return readList_[name];
+bool Conversation::IsRead(string name) {
+    return readList_[name] == READ ? true : false;
 }
 
 
@@ -52,12 +41,12 @@ void Conversation::VrtDo(string cmdLine, string activeUsrName)
 	if (cmdLineTokens[0] == "Write" && cmdLineTokens.size() == 2) // Write
 	{
         if (UserExist(activeUsrName)) {
-            Message newMes = Message(activeUsrName, cmdLineTokens[2]);
+            Message newMes = Message(activeUsrName, cmdLineTokens[1]);
             messages_.push_back(newMes);
             updateTime_ = chrono::system_clock::now();
-            set<User> :: iterator temp = members_.begin();
+            set<string> :: iterator temp = members_.begin();
             for (int i = 0; i < (int)members_.size(); i++) {
-                readList_[temp->getUserName()] = UNREAD;
+                readList_[*temp] = UNREAD;
                 temp++;
             }
             readList_[activeUsrName] = READ;
@@ -68,7 +57,7 @@ void Conversation::VrtDo(string cmdLine, string activeUsrName)
     
 	else if (cmdLineTokens[0] == "Back" && cmdLineTokens.size() == 1) // Back
 	{
-		// add code here
+        throw;
 	}
 	else // INVALID_INPUT
 		cout << INVALID_INPUT;
@@ -83,9 +72,9 @@ void Conversation::VrtDo(string cmdLine, string activeUsrName)
 //**************************************************************************************************
 void Conversation::Preview(string activeUsrName)
 {
-    set<User> :: iterator temp = members_.begin();
+    set<string> :: iterator temp = members_.begin();
     for (int i = 0; i< (int)members_.size(); i++) {
-        if(temp->getUserName() == activeUsrName)
+        if(*temp == activeUsrName)
         {
             readList_[activeUsrName] = READ;
             cout << PARTICIPANTS_TITLE << endl;
@@ -106,8 +95,33 @@ void Conversation::Preview(string activeUsrName)
 //* Return value    :   none.
 //**************************************************************************************************
 void Conversation::DisplayParticipants() {
-    cout <<
+    set<string> :: iterator itr = members_.begin();
+    cout << PARTICIPANTS_TITLE;
+    cout << *itr;
+    cout << PARTICIPANT_READ_STATUS;
+    itr++;
+    for (int i = 1; i < (int)members_.size(); i++) {
+        cout << COMMA_SPACE;
+        cout << *itr;
+        cout << PARTICIPANT_READ_STATUS;
+        itr++;
+    }
+    cout << endl;
 }
+
+//**************************************************************************************************
+//* function name   :   DisplayMessages
+//* Description     :   The function print all the messages in the Conversation.
+//* Parameters      :   none.
+//* Return value    :   none.
+//**************************************************************************************************
+void Conversation::DisplayMessages() {
+    list<Message>::iterator itr = messages_.begin();
+    for (int i = 0; i < (int)messages_.size(); i++) {
+        (*itr).Print();
+    }
+}
+
 
 void Conversation::Help() const
 {
