@@ -1,4 +1,5 @@
 #include "MessageBox.h"
+#include "Defs.h"
 #include <iostream>
 using namespace std;
 
@@ -85,7 +86,7 @@ void MessageBox::VrtDo(string cmdLine, string activeUsrName)
         if(isRep(cmdLineTokens))
            cout << CONVERSATION_FAIL_USER_REPETITION << endl;
         else
-            throw new CheckAllUsers(vec2str(cmdLineTokens));
+            throw new CheckAllUsersExeption(vec2str(cmdLineTokens));
 	}
 	else if (cmdLineTokens[0] == "Open" && cmdLineTokens.size() == 2) // Open
 	{
@@ -93,23 +94,31 @@ void MessageBox::VrtDo(string cmdLine, string activeUsrName)
         if (conversationNum < 1 || conversationNum > conversations_.size())
             cout << INVALID_CONVERSATION_NUMBER << endl;
         else {
-            list<MySharedPtr<Conversation>>::iterator itr = conversations_.begin();
-            for (int i = 1; i <= conversationNum; i++, itr++);
-            (*itr)->Preview(activeUsrName);
-            throw new ChangeStatus(vec2str(cmdLineTokens));
+//            list<MySharedPtr<Conversation>>::iterator itr = conversations_.begin();
+//            for (int i = 1; i <= conversationNum; i++, itr++);
+//            (*itr)->Preview(activeUsrName);
+            throw new OpenConversationExeption(activeUsrName,conversationNum);
         }
 	}
 	else if (cmdLineTokens[0] == "Delete" && cmdLineTokens.size() == 2) // Delete
 	{
-		// add code here
-	}
+        int conversationNum = str2num(cmdLineTokens[1]);
+        if (conversationNum < 1 || conversationNum > conversations_.size())
+            cout << INVALID_CONVERSATION_NUMBER << endl;
+        else{
+            list<MySharedPtr<Conversation>>::iterator itr = conversations_.begin();
+            for (int i = 1; i <= conversationNum; i++, itr++);
+            (*itr)->removeUser(activeUsrName);
+            itr->~MySharedPtr();
+        }
+    }
 	else if (cmdLineTokens[0] == "Search" && cmdLineTokens.size() == 2) // Search
 	{
-		// add code here
+        throw new SearchExeption(cmdLineTokens[1]);
 	}
 	else if (cmdLineTokens[0] == "Back") // Back
 	{
-		// add code here
+		throw new BackExeption();
 	}
 	else // INVALID_INPUT
         cout << INVALID_INPUT;
@@ -134,7 +143,7 @@ void MessageBox::Preview(string activeUsrName)
     for (; itr != conversations_.end(); itr++) // iterate over conversations with iterator called itr
 	{
 		cout << count << ") ";
-		if ((*itr)->isRead(activeUsrName)) //* the user did not read the current message
+		if (!(*itr)->IsRead(activeUsrName)) //* the user did not read the current message
 			cout << "(UNREAD) ";
 		cout << "Participants: ";
 		(*itr)->DisplayParticipants();
