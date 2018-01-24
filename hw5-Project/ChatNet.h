@@ -1,6 +1,7 @@
 #ifndef _SOCIAL_NET_H_
 #define _SOCIAL_NET_H_
 
+#include <stack>
 #include "Defs.h"
 #include "ObjectInterface.h"
 #include "User.h"
@@ -9,7 +10,7 @@
 
 
 class ChatNet : public ObjectInterface {
-//---------------------------Methods---------------------------//
+    //---------------------------Methods---------------------------//
 public:
     // constructor
     ChatNet(const string& networkName, const string& adminName, const string& adminPass);
@@ -21,12 +22,16 @@ public:
     void Help() const;
     
     
-//---------------------------Properties---------------------------//
+    //---------------------------Properties---------------------------//
 private:
+    stack<ObjectInterface> activeObjectStack_;
     string networkName_;
     string currentUser_;
     stack<ObjectInterface> ActiveObjStack_;
     map<string, MySharedPtr<User>> users_;
+    
+    bool checkUsers(vector<string> users);
+    User* findUser(string userName);
 };
 
 

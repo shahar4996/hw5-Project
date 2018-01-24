@@ -66,23 +66,23 @@ void ChatNet::Do(string cmd)
     }
     catch (CheckAllUsersExeption ex)
     {
-        activeObjStack_.top().add(checkUsers(ex.getNames()),ex.getNames());
+        activeObjectStack_.top().add(checkUsers(ex.getNames()),ex.getNames());
     }
     catch (OpenConversationExeption ex)
     {
-        string userName = ex.getUserName();
-        int conversationNum = ex.getConversationNum();
-        MySharedPtr<Conversation> *conversations = findUser(userName)->getMessageBox()->getConversations();
-        list<MySharedPtr<Conversation>>::iterator itr = (*conversations).begin();
-        for (int i = 1; i <= conversationNum; i++, itr++);
-        ActiveObjStack_.push((*itr));
-        (*itr)->Preview(activeUsrName);
+//        string userName = ex.getUserName();
+//        int conversationNum = ex.getConversationNum();
+//        MySharedPtr<Conversation> *conversations = findUser(userName)->getMessageBox()->getConversations();
+//        list<MySharedPtr<Conversation>>::iterator itr = (*conversations).begin();
+//        for (int i = 1; i <= conversationNum; i++, itr++);
+//        activeObjectStack_.push((*itr));
+//        (*itr)->Preview(activeUsrName);
     }
     catch (UserExeption e)
     {
         if (e.getType() == "Messages") {
-            ActiveObjStack_.push(*(users_[currentUser_]->getMessageBox()));
-            ActiveObjStack_.top().Preview(currentUser_);
+            activeObjectStack_.push(*(users_[currentUser_]->getMessageBox()));
+            activeObjectStack_.top().Preview(currentUser_);
         }
         else if (e.getType() == "Logout") {
             ActiveObjStack_.pop();
