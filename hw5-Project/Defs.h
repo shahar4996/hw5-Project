@@ -68,10 +68,17 @@ private:
 class UserExeption {
 public:
     UserExeption(string exp) : exp_(exp) {};
+    UserExeption(string exp, string name) : exp_(exp), name_(name) {};
+    UserExeption(string exp, string name, string password) : exp_(exp), name_(name), password_(password) {};
     string getType() const { return exp_;};
+    string getName() const { return name_;};
+    string getTPassword() const { return password_;};
+
     
 private:
     string exp_;
+    string name_;
+    string password_;
 };
 
 #endif

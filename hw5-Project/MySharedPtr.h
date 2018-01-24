@@ -1,6 +1,7 @@
 #ifndef _MY_SHARED_PTR_H_
 #define _MY_SHARED_PTR_H_
 
+
 template <class T> class MySharedPtr {
 public:
     
@@ -10,6 +11,7 @@ public:
     //* Parameters      :   pointer from type T*.
     //* Return value    :   nothing (constructor).
     //**************************************************************************************************
+    
     MySharedPtr(T* ptr) : ptr_(ptr) {
         count_ = new int;
         *count_ = 1;

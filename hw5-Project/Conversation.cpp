@@ -6,7 +6,11 @@
 
 
 //Interface
-Conversation::Conversation(vector<string> members) {
+Conversation::Conversation() {
+    updateTime_ = (SysTime)chrono::system_clock::now();
+}
+
+Conversation::Conversation(const vector<string> members) {
     for (int i = 0; i < (int)members.size(); i++) {
         members_.insert(members.at(i));
     }
@@ -133,3 +137,13 @@ void Conversation::Help() const
 	cout << "Write <message>" << endl;
 	cout << "Back" << endl;
 }
+
+bool Conversation::operator<(const Conversation& rhs){
+    return updateTime_ < rhs.updateTime_;
+}
+
+Conversation::Conversation(Conversation& conv){
+    members_ = conv.members_;
+    
+}
+

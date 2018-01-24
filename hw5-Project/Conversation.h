@@ -31,13 +31,21 @@ class Conversation : public ObjectInterface {
 // ------------------------------- Methods ------------------------------------ //
 public:
     //**************************************************************************************************
+    
+    Conversation();
+    
+    
     //* function name   :   Conversation
     //* Description     :   Constuct new Conversation obj.
     //* Parameters      :   memebers of the conv, list of messages, map of users
     //*                     and if they read the conv. and the update time .
     //* Return value    :   none.
     //**************************************************************************************************
-    Conversation(vector<string> members);
+    Conversation(const vector<string> members);
+    
+    
+    Conversation(Conversation& conv);
+    
     
     //**************************************************************************************************
     //* function name   :   Preview
@@ -97,6 +105,7 @@ public:
     bool IsRead(string name);
     
     void removeUser(string name);
+    bool operator<(const Conversation& rhs);
  // ------------------------------- Properties ------------------------------------ //
 private:
     set<string> members_;

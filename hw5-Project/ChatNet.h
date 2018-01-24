@@ -3,6 +3,7 @@
 
 #include "Defs.h"
 #include "ObjectInterface.h"
+#include "User.h"
 #include <stack>
 
 
@@ -16,7 +17,7 @@ public:
     // Virtual Function Override
     void VrtDo(string cmdLine, string activeUsrName);
     void Do(string cmd);
-    void VrtPreview(string activeUsrName);
+    void Preview(string activeUsrName);
     void Help() const;
     
     

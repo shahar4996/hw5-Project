@@ -12,6 +12,13 @@
 
 
 // Interface
+ChatNet::ChatNet(const string& networkName, const string& adminName, const string& adminPass){
+    
+}
+
+
+
+
 void ChatNet::VrtDo(string cmdLine, string activeUsrName)
 {
     vector<string> cmdLineTokens = StringSplit(cmdLine, BLANK_SPACES);
@@ -49,6 +56,14 @@ void ChatNet::Do(string cmd)
             ActiveObjStack_.pop();
             currentUser_ = NO_ACTIVE_USER;
             ActiveObjStack_.top().Preview(currentUser_);
+        }
+        else if (e.getType() == "New") {
+            if (users_.find(e.getName()) == users_.end()) {  // may be problematic.
+                MySharedPtr<User> newAdmin = *new MySharedPtr<User>(new  Admin(e.getName(), e.getTPassword(), *new MessageBox(e.getName())));
+                users_[e.getName()] = newAdmin;
+            }
+            else
+                cout << USER_ALREADY_EXISTS;
         }
     }
     catch (...)
