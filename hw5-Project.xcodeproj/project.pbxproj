@@ -74,6 +74,7 @@
 		A788DEB620125F8700CA9321 /* hw5-Project */ = {
 			isa = PBXGroup;
 			children = (
+				A788DEC62012608D00CA9321 /* MySharedPtr.h */,
 				A788DEC72012608D00CA9321 /* ChatNet.cpp */,
 				A788DEC52012608D00CA9321 /* ChatNet.h */,
 				A788DEC22012608D00CA9321 /* Conversation.cpp */,
@@ -82,7 +83,6 @@
 				A788DEC92012608D00CA9321 /* Defs.h */,
 				A788DEBF2012608D00CA9321 /* MessageBox.cpp */,
 				A788DEC82012608D00CA9321 /* MessageBox.h */,
-				A788DEC62012608D00CA9321 /* MySharedPtr.h */,
 				A788DEC12012608D00CA9321 /* ObjectInterface.h */,
 				A788DEC02012608D00CA9321 /* User.cpp */,
 				A788DEC42012608D00CA9321 /* User.h */,

@@ -59,11 +59,11 @@ vector<string> StringSplit(const string& str, const char* delims, int maxNumSepa
 // ------------------------------- Exeptions ------------------------------- //
 class CheckAllUsersExeption {
 public:
-    CheckAllUsersExeption(string names) : names_(names) {};
-    string getNames() { return names_; };
+    CheckAllUsersExeption(vector<string> names) : names_(names) {};
+    vector<string> getNames() { return names_; };
     
 private:
-    string names_;
+    vector<string> names_;
 };
 
 class OpenConversationExeption{

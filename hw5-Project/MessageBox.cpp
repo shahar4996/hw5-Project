@@ -8,6 +8,8 @@ MessageBox::MessageBox(string user_name) : user_name_(user_name){
     conversations_ = *new list<MySharedPtr<Conversation>>;
 };
 
+list<MySharedPtr<Conversation>> MessageBox::getConversations(){return conversations_; }
+
 //**************************************************************************************************
 //* function name   :   isRep
 //* Description     :   find if there are repetitions in a given string vector.
@@ -23,39 +25,17 @@ bool MessageBox::isRep(vector<string> &names){
 }
 
 //**************************************************************************************************
-//* function name   :   allUsersExist
-//* Description     :   find if all user names exsists in chatNet.
-//* Parameters      :   a string vector reference.
-//* Return value    :   true if all users exist. otherwise false.
-//**************************************************************************************************
-bool MessageBox::allUsersExist(vector<string> &names){
-   
-}
-
-//**************************************************************************************************
 //* function name   :   add
 //* Description     :   add conversation or print error message, based on found.
 //* Parameters      :   boolean that indicates if all names are users.
 //*                     string that contains all the participants names - seperated by space.
 //* Return value    :   nothing (void function).
 //**************************************************************************************************
-void MessageBox::add(bool found, string names){
+void MessageBox::add(bool found, vector<string> names){
     if (found)
-        conversations_.push_back(*new MySharedPtr<Conversation>(new Conversation(StringSplit(names, BLANK_SPACES))));
+        conversations_.push_back(*new MySharedPtr<Conversation>(new Conversation(names)));
     else
         cout << CONVERSATION_FAIL_NO_USER << endl;
-}
-
-//**************************************************************************************************
-//* function name   :   vec2str
-//* Description     :   create a string from a vector indices.
-//* Parameters      :   a string vector reference.
-//* Return value    :   the new string.
-//**************************************************************************************************
-string MessageBox::vec2str(vector<string> &strVec){
-    string str = "";
-    for (int i=0; i < strVec.size(); i++)
-        str += strVec[i] + " ";
 }
 
 //**************************************************************************************************
@@ -86,17 +66,14 @@ void MessageBox::VrtDo(string cmdLine, string activeUsrName)
         if(isRep(cmdLineTokens))
            cout << CONVERSATION_FAIL_USER_REPETITION << endl;
         else
-            throw new CheckAllUsersExeption(vec2str(cmdLineTokens));
+            throw new CheckAllUsersExeption(cmdLineTokens);
 	}
-	else if (cmdLineTokens[0] == "Open" && cmdLineTokens.size() == 2) // Open
+	else if (cmdLineTokens[0] == "Open" && cmdLineTokens.size() == 2) // Open 
 	{
         int conversationNum = str2num(cmdLineTokens[1]);
         if (conversationNum < 1 || conversationNum > conversations_.size())
             cout << INVALID_CONVERSATION_NUMBER << endl;
         else {
-//            list<MySharedPtr<Conversation>>::iterator itr = conversations_.begin();
-//            for (int i = 1; i <= conversationNum; i++, itr++);
-//            (*itr)->Preview(activeUsrName);
             throw new OpenConversationExeption(activeUsrName,conversationNum);
         }
 	}
