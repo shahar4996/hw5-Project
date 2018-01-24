@@ -2,14 +2,32 @@
 #include <stdexcept>
 #include "Conversation.h"
 #include "ChatNet.h"
+#include "Defs.h"
 
 #define NO_ACTIVE_USER "No User"
 
+//**************************************************************************************************
+//* function name   :   checkUsers
+//* Description     :   checks if all users specified in the given vector are registerd at chatNet.
+//* Parameters      :   users - string vector.
+//* Return value    :   returns true if all users exists. otherwise returns false.
+//**************************************************************************************************
+bool ChatNet::checkUsers(vector<string> users){
+    for (int i = 1; i < users.size(); i++)
+        if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
+            return false;
+    return true;
+}
 
-
-
-
-
+//**************************************************************************************************
+//* function name   :   findUser
+//* Description     :   return user object that has the specified user name.
+//* Parameters      :   userName - the wanted user name.
+//* Return value    :   returns the user that has the specified user name. if not found returns NULL.
+//**************************************************************************************************
+User* ChatNet::findUser(string userName){
+    
+}
 
 // Interface
 ChatNet::ChatNet(const string& networkName, const string& adminName, const string& adminPass){
@@ -46,6 +64,20 @@ void ChatNet::Do(string cmd)
         // When using stack (from STL) this could like something like the following line:
         // activeObjectStack_.top().Do(cmd, activeUsrName_);
     }
+    catch (CheckAllUsersExeption ex)
+    {
+        activeObjStack_.top().add(checkUsers(ex.getNames()),ex.getNames());
+    }
+    catch (OpenConversationExeption ex)
+    {
+        string userName = ex.getUserName();
+        int conversationNum = ex.getConversationNum();
+        MySharedPtr<Conversation> *conversations = findUser(userName)->getMessageBox()->getConversations();
+        list<MySharedPtr<Conversation>>::iterator itr = (*conversations).begin();
+        for (int i = 1; i <= conversationNum; i++, itr++);
+        ActiveObjStack_.push((*itr));
+        (*itr)->Preview(activeUsrName);
+    }
     catch (UserExeption e)
     {
         if (e.getType() == "Messages") {
@@ -70,7 +102,6 @@ void ChatNet::Do(string cmd)
     {
         
     }
-    // more catch phrases
 }
 
 
