@@ -4,7 +4,13 @@
 
 // ------------------------------- User ------------------------------- //
 
-
+//**************************************************************************************************
+//* function name   :   getMessageBox
+//* Description     :   the function returns the message box.
+//* Parameters      :   none.
+//* Return value    :   the message box of the current user.
+//**************************************************************************************************
+MessageBox* User::getMessageBox() { return &messageBox_; };
 
 // Interface
 

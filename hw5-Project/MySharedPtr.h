@@ -4,7 +4,6 @@
 
 template <class T> class MySharedPtr {
 public:
-    
     //**************************************************************************************************
     //* function name   :   MySharedPtr
     //* Description     :   constructor.
