@@ -2,6 +2,7 @@
 #define _DEFS_H_
 #include <string>
 #include <vector>
+#include <list>
 using namespace std;
 
 #define BLANK_SPACES " \t\n\r"
@@ -38,11 +39,11 @@ class ObjectInterface;
 // ActiveObj
 class ActiveObj {
 public:
-	ActiveObj(ObjectInterface* objPtr) : objPtr_(objPtr) {}
-	void Do(string cmd, string activeUsrName);
-	void Preview(string usrName);
+    ActiveObj(ObjectInterface* objPtr) : objPtr_(objPtr) {}
+    void Do(string cmd, string activeUsrName);
+    void Preview(string usrName);
 private:
-	ObjectInterface* objPtr_;
+    ObjectInterface* objPtr_;
 };
 
 // BackSignal
@@ -56,16 +57,16 @@ vector<string> StringSplit(const string& str, const char* delims, int maxNumSepa
 
 
 // ------------------------------- Exeptions ------------------------------- //
-class CheckAllUsers {
+class CheckAllUsersExeption {
 public:
-    CheckAllUsers(string names) : names_(names) {};
-    string getNames() const { return names_;};
+    CheckAllUsersExeption(vector<string> names) : names_(names) {};
+    vector<string> getNames() { return names_; };
     
 private:
-    string names_;
+    vector<string> names_;
 };
 
-class UserExeption {
+class UserExeption{
 public:
     UserExeption(string exp) : exp_(exp) {};
     UserExeption(string exp, string name) : exp_(exp), name_(name) {};
@@ -73,7 +74,7 @@ public:
     string getType() const { return exp_;};
     string getName() const { return name_;};
     string getTPassword() const { return password_;};
-
+    
     
 private:
     string exp_;
@@ -81,4 +82,28 @@ private:
     string password_;
 };
 
+class OpenConversationExeption{
+public:
+    OpenConversationExeption(string userName, int conversationNum) : userName_(userName), conversationNum_(conversationNum){};
+    string getUserName() const { return userName_; };
+    int getConversationNum() const { return conversationNum_; };
+private:
+    string userName_;
+    int conversationNum_;
+};
+
+class SearchExeption {
+public:
+    SearchExeption(string partialStr) : partialStr_(partialStr) {};
+    string getStr() const { return partialStr_; };
+private:
+    string partialStr_;
+};
+
+class BackExeption {
+public:
+    BackExeption(){};
+};
+
 #endif
+
