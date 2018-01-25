@@ -26,7 +26,7 @@ bool ChatNet::checkUsers(vector<string> users){
 //* Return value    :   returns the user that has the specified user name. if not found returns NULL.
 //**************************************************************************************************
 User* ChatNet::findUser(string userName){
-    
+    return nullptr;
 }
 
 // Interface
@@ -65,11 +65,15 @@ void ChatNet::Do(string cmd)
     {
         string userName = ex.getUserName();
         int conversationNum = ex.getConversationNum();
-        MySharedPtr<Conversation> *conversations = findUser(userName)->getMessageBox()->getConversations();
+        list<MySharedPtr<Conversation>> *conversations = findUser(userName)->getMessageBox()->getConversations();
         list<MySharedPtr<Conversation>>::iterator itr = (*conversations).begin();
         for (int i = 1; i <= conversationNum; i++, itr++);
-        activeObjectStack_.push(itr->get());
-        (*itr)->Preview(activeUsrName);
+        activeObjectStack_.push(*itr->get());
+        (*itr)->Preview(userName);
+    }
+    catch (SearchExeption ex)
+    {
+        
     }
 }
 

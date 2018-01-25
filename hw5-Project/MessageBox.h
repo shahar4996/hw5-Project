@@ -13,7 +13,7 @@ public:
     void VrtDo(string cmd, string activeUsrName);
     void Preview(string activeUsrName);
     void Help() const;
-    list<MySharedPtr<Conversation>> getConversations();
+    list<MySharedPtr<Conversation>>* getConversations();
 private:
     list<MySharedPtr<Conversation>> conversations_; // conversations list
     string user_name_; // user name of the messageBox owner

@@ -8,7 +8,7 @@ MessageBox::MessageBox(string user_name) : user_name_(user_name){
     conversations_ = *new list<MySharedPtr<Conversation>>;
 };
 
-list<MySharedPtr<Conversation>> MessageBox::getConversations(){return conversations_; }
+list<MySharedPtr<Conversation>>* MessageBox::getConversations(){ return &conversations_; }
 
 //**************************************************************************************************
 //* function name   :   isRep

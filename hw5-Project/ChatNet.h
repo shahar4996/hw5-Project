@@ -4,6 +4,7 @@
 #include <stack>
 #include "Defs.h"
 #include "ObjectInterface.h"
+#include "User.h"
 
 
 
