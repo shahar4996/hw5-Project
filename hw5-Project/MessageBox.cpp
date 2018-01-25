@@ -5,6 +5,7 @@ using namespace std;
 
 
 MessageBox::MessageBox(string user_name) : user_name_(user_name){
+    
     conversations_ = *new list<MySharedPtr<Conversation>>;
 };
 

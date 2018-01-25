@@ -1,6 +1,7 @@
 #ifndef _CONVERSATION_H_
 #define _CONVERSATION_H_
 
+#include <iostream>
 #include "ObjectInterface.h"
 #include <set>
 #include <list>

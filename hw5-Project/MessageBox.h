@@ -4,7 +4,7 @@
 
 #include <list>
 #include "ObjectInterface.h"
-//#include "Conversation.h"
+#include "Conversation.h"
 #include "MySharedPtr.h"
 
 class MessageBox : public ObjectInterface {

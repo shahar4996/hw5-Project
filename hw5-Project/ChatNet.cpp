@@ -14,7 +14,8 @@
 //**************************************************************************************************
 bool ChatNet::checkUsers(vector<string> users){
     for (int i = 1; i < users.size(); i++)
-        if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
+       if(users_.find(users[i]) == users_.end())
+        //if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
             return false;
     return true;
 }
@@ -26,7 +27,7 @@ bool ChatNet::checkUsers(vector<string> users){
 //* Return value    :   returns the user that has the specified user name. if not found returns NULL.
 //**************************************************************************************************
 User* ChatNet::findUser(string userName){
-    
+    return nullptr;
 }
 
 // Interface
@@ -105,7 +106,7 @@ void ChatNet::Do(string cmd)
 }
 
 
-void ChatNet::VrtPreview(string activeUsrName)
+void ChatNet::Preview(string activeUsrName)
 {
     cout << "Welcome to " << networkName_ << "." << endl;
 }

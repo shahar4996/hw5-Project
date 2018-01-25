@@ -9,19 +9,19 @@ using namespace std;
 
 class ObjectInterface {
 public:
-	virtual ~ObjectInterface() {}
-	virtual void VrtDo(string cmd, string activeUsrName) = 0;
-	virtual void Preview(string activeUsrName) = 0;
-	virtual void Help() const = 0;
+    virtual ~ObjectInterface() {}
+    virtual void VrtDo(string cmd, string activeUsrName) = 0;
+    virtual void Preview(string activeUsrName) = 0;
+    virtual void Help() const = 0;
     virtual void add(bool found, vector<string> names);
-	void Do(string cmd, string activeUsrName)
-	{
-		vector<string> split = StringSplit(cmd, BLANK_SPACES, 1);
-		if (split[0] == "Help" && split.size() == 1) // Help
-			this->Help();
-		else
-			this->VrtDo(cmd, activeUsrName);
-	}
+    void Do(string cmd, string activeUsrName)
+    {
+        vector<string> split = StringSplit(cmd, BLANK_SPACES, 1);
+        if (split[0] == "Help" && split.size() == 1) // Help
+            this->Help();
+        else
+            this->VrtDo(cmd, activeUsrName);
+    }
 };
 
 
