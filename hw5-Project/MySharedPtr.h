@@ -77,7 +77,7 @@ public:
     //* function name   :   = operator
     //* Description     :   assigment overload. When the old object is not being held by any pointer
     //*                     - then it is being released.
-    //* Parameters      :   none.
+    //* Parameters      :   MySharedPtr reference
     //* Return value    :   returns the new assigment reference.
     //**************************************************************************************************
     MySharedPtr& operator=(const MySharedPtr& new_ptr){
@@ -89,6 +89,16 @@ public:
             (*count_)++;
         }
         return *this;
+    };
+    
+    //**************************************************************************************************
+    //* function name   :   < operator
+    //* Description     :   'bigger' overload.
+    //* Parameters      :   MySharedPtr reference
+    //* Return value    :   returns the resault of objects comparison.
+    //**************************************************************************************************
+    bool operator<(const MySharedPtr& rhs) const{
+        return (*ptr_)<(*rhs.get());
     };
     
 private:

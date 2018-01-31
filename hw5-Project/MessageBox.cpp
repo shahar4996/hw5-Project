@@ -6,10 +6,10 @@ using namespace std;
 
 MessageBox::MessageBox(string user_name) : user_name_(user_name){
     
-    conversations_ = *new list<MySharedPtr<Conversation>>;
+    conversations_ = *new vector<MySharedPtr<Conversation>>;
 };
 
-list<MySharedPtr<Conversation>>* MessageBox::getConversations(){ return &conversations_; }
+vector<MySharedPtr<Conversation>>* MessageBox::getConversations(){ return &conversations_; }
 
 //**************************************************************************************************
 //* function name   :   isRep
@@ -59,8 +59,8 @@ int MessageBox::str2num(string str){
 
 void MessageBox::VrtDo(string cmdLine, string activeUsrName)
 {
-	size_t idx;
 	vector<string> cmdLineTokens = StringSplit(cmdLine, BLANK_SPACES);
+    sort(conversations_.begin(), conversations_.end());
 	if (cmdLineTokens[0] == "New" && cmdLineTokens.size() > 1) // New
 	{
         cmdLineTokens.erase(cmdLineTokens.begin());
@@ -84,10 +84,8 @@ void MessageBox::VrtDo(string cmdLine, string activeUsrName)
         if (conversationNum < 1 || conversationNum > conversations_.size())
             cout << INVALID_CONVERSATION_NUMBER << endl;
         else{
-            list<MySharedPtr<Conversation>>::iterator itr = conversations_.begin();
-            for (int i = 1; i <= conversationNum; i++, itr++);
-            (*itr)->removeUser(activeUsrName);
-            itr->~MySharedPtr();
+            conversations_[conversationNum]->removeUser(activeUsrName);
+            conversations_[conversationNum].~MySharedPtr();
         }
     }
 	else if (cmdLineTokens[0] == "Search" && cmdLineTokens.size() == 2) // Search
@@ -111,20 +109,20 @@ void MessageBox::VrtDo(string cmdLine, string activeUsrName)
 //**************************************************************************************************
 void MessageBox::Preview(string activeUsrName)
 {
+    sort(conversations_.begin(), conversations_.end());
 	int count = 1;
 	if (conversations_.empty()) // There are no conversations in MessageBox
 		cout << "No conversations" << endl;
 	else
 		cout << "Conversations:" << endl;
-   
-    list<MySharedPtr<Conversation>>::iterator itr = conversations_.begin();
-    for (; itr != conversations_.end(); itr++) // iterate over conversations with iterator called itr
+
+    for (int i=0; i < conversations_.size(); i++) // iterate over conversations with iterator called itr
 	{
 		cout << count << ") ";
-		if (!(*itr)->IsRead(activeUsrName)) //* the user did not read the current message
+		if (!conversations_[i]->IsRead(activeUsrName)) //* the user did not read the current message
 			cout << "(UNREAD) ";
 		cout << "Participants: ";
-		(*itr)->DisplayParticipants();
+		conversations_[i]->DisplayParticipants();
 		++count;
 	}
 }

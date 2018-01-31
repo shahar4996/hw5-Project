@@ -6,7 +6,7 @@
 
 #define NO_ACTIVE_USER "No User"
 
-typedef list<MySharedPtr<Conversation>> ConvList;
+typedef vector<MySharedPtr<Conversation>> ConvList;
 
 //**************************************************************************************************
 //* function name   :   checkUsers
@@ -15,9 +15,13 @@ typedef list<MySharedPtr<Conversation>> ConvList;
 //* Return value    :   returns true if all users exists. otherwise returns false.
 //**************************************************************************************************
 bool ChatNet::checkUsers(vector<string> users){
-    for (int i = 1; i < users.size(); i++)
-        if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
+    for (int i = 1; i < users.size(); i++){
+        try {
+            users.at(i);
+        } catch (out_of_range) {
             return false;
+        }
+    }
     return true;
 }
 
@@ -84,13 +88,13 @@ void ChatNet::Do(string cmd)
     {
         bool found_flag = false;
         sort(users_.begin(), users_.end());
-        list<string>::iterator itr = users_.begin();
+        map<string, MySharedPtr<User>>::iterator itr = users_.begin();
         for (; itr != users_.end(); itr++){
-            if (itr->find(ex.getStr())) {
+            if ((*itr).first.find(ex.getStr())) {
                 if (!found_flag)
                     cout << SEARCH_FOUND_TITLE << endl;
                 found_flag = true;
-                cout << *itr << endl;
+                cout << (*itr).first << endl;
             }
         }
         if (!found_flag)
@@ -98,12 +102,12 @@ void ChatNet::Do(string cmd)
     }
     catch (BackExeption ex){
         activeObjectStack_.pop();
-        activeObjectStack_.top().Preview();
+        activeObjectStack_.top().Preview(currentUser_);
     }
     catch (UserExeption e)
     {
         if (e.getType() == "Messages") {
-void ChatNet::VrtPreview(string activeUsrName)
+            activeObjectStack_.push(*(users_[currentUser_]->getMessageBox()));
             activeObjectStack_.top().Preview(currentUser_);
         }
         else if (e.getType() == "Logout") {

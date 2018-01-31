@@ -13,9 +13,9 @@ public:
     void VrtDo(string cmd, string activeUsrName);
     void Preview(string activeUsrName);
     void Help() const;
-    list<MySharedPtr<Conversation>>* getConversations();
+    vector<MySharedPtr<Conversation>>* getConversations();
 private:
-    list<MySharedPtr<Conversation>> conversations_; // conversations list
+    vector<MySharedPtr<Conversation>> conversations_; // conversations list
     string user_name_; // user name of the messageBox owner
     
     bool isRep(vector<string> &names);
@@ -24,5 +24,4 @@ private:
     string vec2str(vector<string> &strVec);
     int str2num(string str);
 };
-
 #endif
