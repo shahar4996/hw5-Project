@@ -16,8 +16,7 @@ typedef list<MySharedPtr<Conversation>> ConvList;
 //**************************************************************************************************
 bool ChatNet::checkUsers(vector<string> users){
     for (int i = 1; i < users.size(); i++)
-       if(users_.find(users[i]) == users_.end())
-        //if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
+        if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
             return false;
     return true;
 }
@@ -100,6 +99,26 @@ void ChatNet::Do(string cmd)
     catch (BackExeption ex){
         activeObjectStack_.pop();
         activeObjectStack_.top().Preview();
+    }
+    catch (UserExeption e)
+    {
+        if (e.getType() == "Messages") {
+void ChatNet::VrtPreview(string activeUsrName)
+            activeObjectStack_.top().Preview(currentUser_);
+        }
+        else if (e.getType() == "Logout") {
+            ActiveObjStack_.pop();
+            currentUser_ = NO_ACTIVE_USER;
+            ActiveObjStack_.top().Preview(currentUser_);
+        }
+        else if (e.getType() == "New") {
+            if (users_.find(e.getName()) == users_.end()) {  // may be problematic.
+                MySharedPtr<User> newAdmin = *new MySharedPtr<User>(new  Admin(e.getName(), e.getTPassword(), *new MessageBox(e.getName())));
+                users_[e.getName()] = newAdmin;
+            }
+            else
+                cout << USER_ALREADY_EXISTS;
+        }
     }
 }
 
