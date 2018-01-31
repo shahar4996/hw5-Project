@@ -113,6 +113,7 @@ void ChatNet::VrtPreview(string activeUsrName)
         }
         else if (e.getType() == "New") {
             if (users_.find(e.getName()) == users_.end()) {  // may be problematic.
+                
                 MySharedPtr<User> newAdmin = *new MySharedPtr<User>(new  Admin(e.getName(), e.getTPassword(), *new MessageBox(e.getName())));
                 users_[e.getName()] = newAdmin;
             }
