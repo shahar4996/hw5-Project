@@ -6,6 +6,8 @@
 
 #define NO_ACTIVE_USER "No User"
 
+typedef list<MySharedPtr<Conversation>> ConvList;
+
 //**************************************************************************************************
 //* function name   :   checkUsers
 //* Description     :   checks if all users specified in the given vector are registerd at chatNet.
@@ -65,15 +67,31 @@ void ChatNet::Do(string cmd)
     {
         string userName = ex.getUserName();
         int conversationNum = ex.getConversationNum();
-        list<MySharedPtr<Conversation>> *conversations = findUser(userName)->getMessageBox()->getConversations();
-        list<MySharedPtr<Conversation>>::iterator itr = (*conversations).begin();
+        ConvList *conversations = findUser(userName)->getMessageBox()->getConversations();
+        ConvList::iterator itr = (*conversations).begin();
         for (int i = 1; i <= conversationNum; i++, itr++);
         activeObjectStack_.push(*itr->get());
         (*itr)->Preview(userName);
     }
     catch (SearchExeption ex)
     {
-        
+        bool found_flag = false;
+        sort(users_.begin(), users_.end());
+        list<string>::iterator itr = users_.begin();
+        for (; itr != users_.end(); itr++){
+            if (itr->find(ex.getStr())) {
+                if (!found_flag)
+                    cout << SEARCH_FOUND_TITLE << endl;
+                found_flag = true;
+                cout << *itr << endl;
+            }
+        }
+        if (!found_flag)
+            cout << SEARCH_NOT_FOUND_TITLE << endl;
+    }
+    catch (BackExeption ex){
+        activeObjectStack_.pop();
+        activeObjectStack_.top().Preview();
     }
 }
 
