@@ -1,6 +1,7 @@
 #ifndef _MY_SHARED_PTR_H_
 #define _MY_SHARED_PTR_H_
 
+
 template <class T> class MySharedPtr {
 public:
     //**************************************************************************************************
@@ -9,6 +10,12 @@ public:
     //* Parameters      :   pointer from type T*.
     //* Return value    :   nothing (constructor).
     //**************************************************************************************************
+    
+    MySharedPtr() : ptr_(nullptr) {
+        count_ = new int;
+    };
+    
+    
     MySharedPtr(T* ptr) : ptr_(ptr) {
         count_ = new int;
         *count_ = 1;
@@ -20,11 +27,15 @@ public:
     //* Parameters      :   pointer from type T*.
     //* Return value    :   nothing (constructor).
     //**************************************************************************************************
-    MySharedPtr(MySharedPtr& new_ptr){
-        ptr_ = new_ptr.ptr_;
-        count_ = new_ptr.count_;
-        (*count_)++;
-    };
+    MySharedPtr(const MySharedPtr& ptr) {
+        ptr_ = ptr.ptr_;
+        count_ = ptr.count_;
+    }
+//    MySharedPtr(MySharedPtr& new_ptr){
+//        ptr_ = new_ptr.ptr_;
+//        count_ = new_ptr.count_;
+//        (*count_)++;
+//    };
     
     //**************************************************************************************************
     //* function name   :   ~MySharedPtr
@@ -69,7 +80,7 @@ public:
     //* Parameters      :   none.
     //* Return value    :   returns the new assigment reference.
     //**************************************************************************************************
-    MySharedPtr& operator=(MySharedPtr& new_ptr){
+    MySharedPtr& operator=(const MySharedPtr& new_ptr){
         if (this != &new_ptr){
             if (!(--(*count_)))
                 ptr_->~T(); // look for potential memory leak

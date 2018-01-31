@@ -14,7 +14,7 @@ public:
     //* Parameters      :   mane of the user, password of user, messagebox of the user
     //* Return value    :   none.
     //**************************************************************************************************
-    User(string name, string password, MessageBox messageBox) : name_(name), password_(password), messageBox_(messageBox) {}
+    User(string name, string password, MessageBox messageBox) : name_(name), password_(password), messageBox_(messageBox) {};
 
     //**************************************************************************************************
     //* function name   :   Preview
@@ -48,6 +48,8 @@ public:
     //* Return value    :   the message box of the current user.
     //**************************************************************************************************
     MessageBox* getMessageBox();
+    
+    
     
     void Help() const;
     // ------------------------------- Properties ------------------------------------ //
@@ -83,6 +85,8 @@ public:
     
 
     void Help() const;
+    
+    
     // ------------------------------- Properties ------------------------------------ //
 private:
    

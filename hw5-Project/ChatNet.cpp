@@ -16,7 +16,8 @@ typedef list<MySharedPtr<Conversation>> ConvList;
 //**************************************************************************************************
 bool ChatNet::checkUsers(vector<string> users){
     for (int i = 1; i < users.size(); i++)
-        if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
+       if(users_.find(users[i]) == users_.end())
+        //if(find(users_.begin(), users_.end(), users.at(i)) == users_.end())
             return false;
     return true;
 }
@@ -32,6 +33,13 @@ User* ChatNet::findUser(string userName){
 }
 
 // Interface
+ChatNet::ChatNet(const string& networkName, const string& adminName, const string& adminPass){
+    
+}
+
+
+
+
 void ChatNet::VrtDo(string cmdLine, string activeUsrName)
 {
     vector<string> cmdLineTokens = StringSplit(cmdLine, BLANK_SPACES);
@@ -96,7 +104,7 @@ void ChatNet::Do(string cmd)
 }
 
 
-void ChatNet::VrtPreview(string activeUsrName)
+void ChatNet::Preview(string activeUsrName)
 {
     cout << "Welcome to " << networkName_ << "." << endl;
 }
