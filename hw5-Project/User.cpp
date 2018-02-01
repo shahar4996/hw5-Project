@@ -1,5 +1,6 @@
 #include<iostream>
 #include "User.h"
+#include <string>
 
 
 // ------------------------------- User ------------------------------- //
@@ -49,7 +50,15 @@ void User::Help() const
 }
 
 
+bool User::operator<(const User& rhs) {
+    if ( name_.compare(rhs.name_) < 0 )
+        return true;
+    return false;
+}
 
+bool User::checkPassword(string password) {
+    return password_ == password;
+}
 
 
 

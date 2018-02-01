@@ -14,7 +14,7 @@ public:
     //* Parameters      :   mane of the user, password of user, messagebox of the user
     //* Return value    :   none.
     //**************************************************************************************************
-    User(string name, string password, MessageBox messageBox) : name_(name), password_(password), messageBox_(messageBox) {};
+    User(string name, string password) : name_(name), password_(password), messageBox_(*new MessageBox(name)) {};
 
     //**************************************************************************************************
     //* function name   :   Preview
@@ -49,7 +49,9 @@ public:
     //**************************************************************************************************
     MessageBox* getMessageBox();
     
-    
+    bool operator<(const User& rhs);
+
+    bool checkPassword(string password);
     
     void Help() const;
     // ------------------------------- Properties ------------------------------------ //
@@ -88,7 +90,6 @@ public:
     
     
     // ------------------------------- Properties ------------------------------------ //
-private:
    
 };
 
